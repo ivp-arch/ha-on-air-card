@@ -16,10 +16,11 @@ const hhmm = (iso) => (typeof iso === "string" ? iso.slice(11, 16) : "");
 
 // Generic TV glyph (no channel logos), same drawing as the approved mockup.
 const TV_ICON = html`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="12" rx="2"></rect><polyline points="8 3 12 7 16 3"></polyline></svg>`;
+const CHEVRON = html`<svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
 
 class OnAirCard extends LitElement {
   static get properties() {
-    return { hass: {}, _config: {}, _view: {} };
+    return { hass: {}, _config: {}, _view: {}, _open: {} };
   }
 
   setConfig(config) {
@@ -58,6 +59,60 @@ class OnAirCard extends LitElement {
           s.attributes?.tonight_window !== undefined
       )
       .sort((a, b) => a.attributes.channel_name.localeCompare(b.attributes.channel_name, "it", { sensitivity: "base" }));
+  }
+
+  _toggle(entityId) {
+    this._open = this._open === entityId ? null : entityId;
+  }
+
+  _renderTonight(channels) {
+    const span = channels.find((s) => s.attributes.tonight_window)?.attributes.tonight_window;
+    return html`
+      ${span ? html`<p class="window">STASERA · ${hhmm(span.start)}–${hhmm(span.end)}</p>` : ""}
+      <ul class="list tonight-list">${channels.map((s, i) => this._tonightRow(s, i))}</ul>
+    `;
+  }
+
+  _tonightRow(state, index) {
+    const { channel_name: name, now, tonight } = state.attributes;
+    const open = this._open === state.entity_id;
+    const panelId = `oa-tonight-${index}`;
+    return html`
+      <li class="block ${open ? "open" : ""}" data-entity=${state.entity_id}>
+        <button
+          type="button"
+          class="row row-button"
+          aria-expanded=${open ? "true" : "false"}
+          aria-controls=${panelId}
+          @click=${() => this._toggle(state.entity_id)}
+        >
+          <span class="icon">${TV_ICON}</span>
+          <span class="info">
+            <span class="channel">${name}</span>
+            <span class="summary">${now
+              ? `In onda: ${now.title} · ${hhmm(now.start)}–${hhmm(now.end)}`
+              : "Nessun programma in onda"}</span>
+          </span>
+          ${CHEVRON}
+        </button>
+        <ul class="programmes" id=${panelId} ?hidden=${!open}>
+          ${(tonight ?? []).map((p) => this._programme(p, now))}
+        </ul>
+      </li>
+    `;
+  }
+
+  // The programme on air is the one equal to `now` (a comparison, not a computation).
+  _programme(programme, now) {
+    const live = Boolean(now) && programme.start === now.start && programme.title === now.title;
+    return html`
+      <li class="programme ${live ? "live" : ""}">
+        <span class="p-time">${hhmm(programme.start)}</span>
+        <span class="p-title">${programme.title}</span>
+        ${live ? html`<span class="pill live-pill">In onda</span>` : ""}
+        ${this._config.show_category && programme.category ? html`<span class="p-cat">${programme.category}</span>` : ""}
+      </li>
+    `;
   }
 
   _setView(view) {
@@ -105,7 +160,7 @@ class OnAirCard extends LitElement {
         ${channels.length
           ? this._view === "now"
             ? this._renderNow(channels)
-            : html`<div class="body"></div>`
+            : this._renderTonight(channels)
           : html`<p class="empty">Nessun canale di On Air. Aggiungi l'integrazione o scegli le entità.</p>`}
       </ha-card>
     `;
