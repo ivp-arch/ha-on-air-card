@@ -1,13 +1,14 @@
 // On Air card: what is on TV now and tonight, from the On Air integration.
 // Presentation only: every value comes from the integration's attributes
 // (contract v1, docs/attributes-contract.md in ivp-arch/ha-on-air).
-const LitElement =
-  customElements.get("ha-panel-lovelace") &&
-  Object.getPrototypeOf(customElements.get("ha-panel-lovelace"));
+// Home Assistant may load the resource before the Lovelace panel is defined (e.g. a
+// page opened outside a dashboard): wait for it. Needs the resource as a JavaScript module.
+await customElements.whenDefined("ha-panel-lovelace");
+const LitElement = Object.getPrototypeOf(customElements.get("ha-panel-lovelace"));
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 
-const CARD_VERSION = "0.1.0";
+const CARD_VERSION = "0.1.1";
 const VIEWS = ["now", "tonight"];
 const DEFAULT_TITLE = "Guida TV";
 
@@ -103,19 +104,27 @@ class OnAirCard extends LitElement {
   }
 
   // Explicit entities in the given order; otherwise (absent or [] from the editor)
-  // every sensor exposing the On Air contract, sorted by channel name.
+  // every On Air sensor, sorted by the displayed name. With the entity registry
+  // (hass.entities) sensors are found by integration, so an unavailable one without
+  // contract attributes still gets its row; hidden ones are left out. Without it,
+  // by the contract attributes.
   _channels() {
     const states = this.hass?.states ?? {};
     const manual = Array.isArray(this._config.entities) && this._config.entities.length > 0;
     if (manual) return this._config.entities.map((id) => states[id]).filter(Boolean);
-    return Object.values(states)
-      .filter(
-        (s) =>
-          s.entity_id.startsWith("sensor.") &&
-          s.attributes?.channel_name !== undefined &&
-          s.attributes?.tonight_window !== undefined
-      )
-      .sort((a, b) => a.attributes.channel_name.localeCompare(b.attributes.channel_name, "it", { sensitivity: "base" }));
+    const registry = this.hass?.entities;
+    const found = registry
+      ? Object.values(registry)
+          .filter((e) => e.platform === "on_air" && !e.hidden && e.entity_id.startsWith("sensor."))
+          .map((e) => states[e.entity_id])
+          .filter(Boolean)
+      : Object.values(states).filter(
+          (s) =>
+            s.entity_id.startsWith("sensor.") &&
+            s.attributes?.channel_name !== undefined &&
+            s.attributes?.tonight_window !== undefined
+        );
+    return found.sort((a, b) => this._name(a).localeCompare(this._name(b), "it", { sensitivity: "base" }));
   }
 
   _toggle(entityId) {

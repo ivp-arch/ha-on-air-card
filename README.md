@@ -18,7 +18,7 @@ The [On Air](https://github.com/ivp-arch/ha-on-air) integration, version 0.1.0 o
 ## Installation
 
 1. Copy `dist/on-air-card.js` into the `www` folder of your Home Assistant configuration (create it if missing, then restart Home Assistant).
-2. Settings → Dashboards → ⋮ → Resources → Add resource: URL `/local/on-air-card.js?v=0.1.0`, type *JavaScript module*. The Resources menu needs Advanced mode in your user profile. Change `?v=` at every update so browsers load the new file.
+2. Settings → Dashboards → ⋮ → Resources → Add resource: URL `/local/on-air-card.js?v=0.1.1`, type *JavaScript module*. The Resources menu needs Advanced mode in your user profile. Change `?v=` at every update so browsers load the new file.
 3. Edit a dashboard → Add card → **On Air Card**.
 
 ## Options
@@ -26,7 +26,7 @@ The [On Air](https://github.com/ivp-arch/ha-on-air) integration, version 0.1.0 o
 | Option | Default | Meaning |
 |---|---|---|
 | `title` | `Guida TV` | Card title |
-| `entities` | all On Air channels | Channel sensors to show, in this order. Empty or missing: every On Air sensor, sorted by channel name |
+| `entities` | all On Air channels | Channel sensors to show, in this order. Empty or missing: every visible On Air sensor (hidden ones are left out), sorted by name; a channel the integration has no data for shows as unavailable |
 | `view` | `now` | View shown first: `now` or `tonight` |
 | `show_category` | `true` | Show the programme category |
 

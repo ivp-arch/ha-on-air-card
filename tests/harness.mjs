@@ -44,6 +44,8 @@ const IMPORT_MAP = {
   },
 };
 
+// `?late` defines the Lovelace panel only after the card script has started, as when
+// Home Assistant loads the resource on a page outside a dashboard.
 const PAGE = `<!doctype html>
 <html><head><meta charset="utf-8">
 <script type="importmap">${JSON.stringify(IMPORT_MAP)}</script>
@@ -53,7 +55,9 @@ const PAGE = `<!doctype html>
   import { LitElement, html, css } from "lit";
   LitElement.prototype.html = html;
   LitElement.prototype.css = css;
-  customElements.define("ha-panel-lovelace", class extends LitElement {});
+  const late = location.search === "?late";
+  const definePanel = () => customElements.define("ha-panel-lovelace", class extends LitElement {});
+  if (!late) definePanel();
   customElements.define("ha-card", class extends HTMLElement {
     connectedCallback() {
       Object.assign(this.style, {
@@ -65,11 +69,15 @@ const PAGE = `<!doctype html>
       });
     }
   });
+  // Like a Home Assistant resource of type "JavaScript module".
   const script = document.createElement("script");
+  script.type = "module";
   script.src = "/dist/on-air-card.js";
-  script.onload = () => { window.__harnessReady = true; };
+  // Ready when the element exists: with top-level await it can come after onload.
+  customElements.whenDefined("on-air-card").then(() => { window.__harnessReady = true; });
   script.onerror = () => { window.__harnessReady = "error"; };
   document.head.append(script);
+  if (late) setTimeout(definePanel, 200);
 </script></body></html>`;
 
 const TYPES = { ".js": "text/javascript", ".mjs": "text/javascript", ".json": "application/json" };
@@ -81,7 +89,8 @@ export async function loadFixture(name = "evening") {
 }
 
 /** Open a page with one <on-air-card>. Returns { page, card, logs, close }. */
-export async function openCard(config, states, { theme = "light", width = 480, scale = 1 } = {}) {
+// `registry`: optional hass.entities (entity registry display entries keyed by entity_id).
+export async function openCard(config, states, { theme = "light", width = 480, scale = 1, registry, late = false } = {}) {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: width + 32, height: 1000 }, deviceScaleFactor: scale });
   const logs = [];
@@ -97,25 +106,28 @@ export async function openCard(config, states, { theme = "light", width = 480, s
       return route.fulfill({ status: 404, body: "" });
     }
   });
-  await page.goto(`${ORIGIN}/`);
-  await page.waitForFunction(() => window.__harnessReady !== undefined);
-  if ((await page.evaluate(() => window.__harnessReady)) !== true) {
+  await page.goto(`${ORIGIN}/${late ? "?late" : ""}`);
+  const ready = await page
+    .waitForFunction(() => window.__harnessReady !== undefined, null, { timeout: 5000 })
+    .then(() => page.evaluate(() => window.__harnessReady))
+    .catch(() => "timeout");
+  if (ready !== true) {
     await browser.close();
     throw new Error(`Card script failed to load: ${logs.join(" | ")}`);
   }
   await page.evaluate(
-    async ({ config, states, theme, vars, width }) => {
+    async ({ config, states, theme, vars, width, registry }) => {
       for (const [name, value] of Object.entries(vars)) document.documentElement.style.setProperty(name, value);
       const card = document.createElement("on-air-card");
       card.style.display = "block";
       card.style.width = `${width}px`;
       card.setConfig(config);
-      card.hass = { states, themes: { darkMode: theme === "dark" } };
+      card.hass = { states, themes: { darkMode: theme === "dark" }, ...(registry ? { entities: registry } : {}) };
       document.getElementById("root").append(card);
       window.__card = card;
       await card.updateComplete;
     },
-    { config, states, theme, vars: THEMES[theme], width }
+    { config, states, theme, vars: THEMES[theme], width, registry }
   );
   const card = await page.evaluateHandle(() => window.__card);
   return { page, card, logs, close: () => browser.close() };

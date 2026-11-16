@@ -31,8 +31,8 @@ const switchState = (page) =>
   );
 const channelIds = (page) => inCard(page, () => window.__card._channels().map((s) => s.entity_id));
 
-async function withCard(config, states, fn) {
-  const opened = await openCard(config, states);
+async function withCard(config, states, fn, options) {
+  const opened = await openCard(config, states, options);
   try {
     await fn(opened.page);
   } finally {
@@ -90,6 +90,50 @@ test("auto-discovery: no entities or an empty list give every On Air channel by 
   await withCard({ entities: [] }, states, async (page) => {
     assert.deepEqual(await channelIds(page), ALPHABETICAL);
   });
+});
+
+// With hass.entities the card finds On Air sensors by integration, so a sensor without
+// contract attributes (integration with no data at all) still gets its row.
+test("auto-discovery through the entity registry: platform on_air, not hidden", async () => {
+  const states = await loadFixture();
+  states["sensor.on_air_rai_4"] = {
+    entity_id: "sensor.on_air_rai_4",
+    state: "unavailable",
+    attributes: { friendly_name: "On Air Rai 4" },
+  };
+  // Looks like the contract but belongs to another integration.
+  states["sensor.lookalike"] = { ...states["sensor.on_air_rai_1"], entity_id: "sensor.lookalike" };
+  const registry = {};
+  for (const id of Object.keys(states)) registry[id] = { entity_id: id, platform: "on_air", labels: [] };
+  registry["sensor.lookalike"].platform = "other";
+  registry["sensor.on_air_sky_uno"].hidden = true;
+  registry["sensor.on_air_not_in_states"] = { entity_id: "sensor.on_air_not_in_states", platform: "on_air", labels: [] };
+  registry["select.on_air_thing"] = { entity_id: "select.on_air_thing", platform: "on_air", labels: [] };
+  states["select.on_air_thing"] = { entity_id: "select.on_air_thing", state: "x", attributes: {} };
+  const expected = [...ALPHABETICAL.filter((id) => id !== "sensor.on_air_sky_uno"), "sensor.on_air_rai_4"];
+  await withCard({}, states, async (page) => {
+    const ids = await channelIds(page);
+    assert.deepEqual([...ids].sort(), [...expected].sort());
+    // Sorted by the displayed name; "On Air Rai 4" (no channel_name) sorts as shown.
+    assert.equal(ids.indexOf("sensor.on_air_rai_4"), ids.indexOf("sensor.on_air_italia_1") + 1);
+    assert.equal(
+      await inCard(page, () =>
+        window.__card.shadowRoot.querySelector('li[data-entity="sensor.on_air_rai_4"] .muted')?.textContent.trim()
+      ),
+      "Non disponibile"
+    );
+  }, { registry });
+});
+
+test("only unavailable sensors: rows instead of the empty message", async () => {
+  const states = {
+    "sensor.on_air_rai_1": { entity_id: "sensor.on_air_rai_1", state: "unavailable", attributes: { friendly_name: "On Air Rai 1" } },
+  };
+  const registry = { "sensor.on_air_rai_1": { entity_id: "sensor.on_air_rai_1", platform: "on_air", labels: [] } };
+  await withCard({}, states, async (page) => {
+    assert.equal(await text(page, ".empty"), null);
+    assert.deepEqual(await channelIds(page), ["sensor.on_air_rai_1"]);
+  }, { registry });
 });
 
 test("explicit entities keep their order and skip missing ones", async () => {

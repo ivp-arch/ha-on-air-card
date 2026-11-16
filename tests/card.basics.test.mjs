@@ -10,7 +10,8 @@ test("registers the element, the card picker entry and the version banner", asyn
     const entry = await page.evaluate(() => window.customCards.find((c) => c.type === "on-air-card"));
     assert.equal(entry.name, "On Air Card");
     assert.equal(entry.preview, true);
-    assert.ok(logs.some((line) => line.includes("ON-AIR-CARD") && line.includes("0.1.0")), logs.join("\n"));
+    // The exact version is checked against the tag by the release workflow.
+    assert.ok(logs.some((line) => /ON-AIR-CARD.*\d+\.\d+\.\d+/.test(line)), logs.join("\n"));
     assert.ok(!logs.some((line) => line.startsWith("pageerror")), logs.join("\n"));
   } finally {
     await close();
@@ -38,6 +39,16 @@ test("stub config is empty: all On Air channels", async () => {
   const { page, close } = await openCard({}, {});
   try {
     assert.deepEqual(await page.evaluate(() => customElements.get("on-air-card").getStubConfig()), {});
+  } finally {
+    await close();
+  }
+});
+
+test("loads even when the Lovelace panel is defined after the card script", async () => {
+  const { page, logs, close } = await openCard({}, {}, { late: true });
+  try {
+    assert.equal(await page.evaluate(() => Boolean(customElements.get("on-air-card"))), true);
+    assert.ok(!logs.some((line) => line.startsWith("pageerror")), logs.join("\n"));
   } finally {
     await close();
   }
