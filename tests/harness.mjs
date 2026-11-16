@@ -81,9 +81,9 @@ export async function loadFixture(name = "evening") {
 }
 
 /** Open a page with one <on-air-card>. Returns { page, card, logs, close }. */
-export async function openCard(config, states, { theme = "light", width = 480 } = {}) {
+export async function openCard(config, states, { theme = "light", width = 480, scale = 1 } = {}) {
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: width + 32, height: 1000 } });
+  const page = await browser.newPage({ viewport: { width: width + 32, height: 1000 }, deviceScaleFactor: scale });
   const logs = [];
   page.on("console", (msg) => logs.push(msg.text()));
   page.on("pageerror", (err) => logs.push(`pageerror: ${err.message}`));
