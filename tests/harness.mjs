@@ -128,3 +128,63 @@ export async function setHass(page, states) {
     await window.__card.updateComplete;
   }, states);
 }
+
+/**
+ * WCAG contrast of every visible text and of the channel icons, measured on computed styles.
+ * Colours go through a 1x1 canvas, so any CSS colour syntax (including color-mix results)
+ * is read; semi-transparent backgrounds are composited up to the page.
+ * Returns [{ kind: "text" | "graphic", text, cls, ratio }].
+ */
+export async function contrastReport(page) {
+  return page.evaluate(() => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1;
+    canvas.height = 1;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    const rgba = (css) => {
+      ctx.clearRect(0, 0, 1, 1);
+      ctx.fillStyle = "rgba(0, 0, 0, 0)";
+      ctx.fillStyle = css;
+      ctx.fillRect(0, 0, 1, 1);
+      const d = ctx.getImageData(0, 0, 1, 1).data;
+      return [d[0], d[1], d[2], d[3] / 255];
+    };
+    const parentOf = (el) => el.parentElement ?? (el.getRootNode() instanceof ShadowRoot ? el.getRootNode().host : null);
+    const over = (top, bottom) => [0, 1, 2].map((i) => top[i] * top[3] + bottom[i] * (1 - top[3])).concat(1);
+    const backgroundOf = (el) => {
+      const layers = [];
+      for (let e = el; e; e = parentOf(e)) {
+        const c = rgba(getComputedStyle(e).backgroundColor);
+        if (c[3] > 0) layers.push(c);
+      }
+      return layers.reverse().reduce((base, layer) => over(layer, base), [255, 255, 255, 1]);
+    };
+    const luminance = ([r, g, b]) => {
+      const f = (v) => {
+        const s = v / 255;
+        return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+      };
+      return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+    };
+    const ratio = (a, b) => {
+      const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+      return (hi + 0.05) / (lo + 0.05);
+    };
+    const out = [];
+    for (const el of window.__card.shadowRoot.querySelectorAll("*")) {
+      if (el.closest("[hidden]")) continue;
+      const hasText = [...el.childNodes].some((n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+      const isIcon = el.tagName.toLowerCase() === "svg" && el.closest(".icon");
+      if (!hasText && !isIcon) continue;
+      const bg = backgroundOf(el);
+      const fg = over(rgba(getComputedStyle(el).color), bg);
+      out.push({
+        kind: isIcon ? "graphic" : "text",
+        text: isIcon ? "icon" : el.textContent.trim().slice(0, 40),
+        cls: String(el.getAttribute("class") ?? el.tagName),
+        ratio: Math.round(ratio(fg, bg) * 100) / 100,
+      });
+    }
+    return out;
+  });
+}

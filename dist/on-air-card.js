@@ -79,7 +79,7 @@ class OnAirCard extends LitElement {
       const missing = kind === "unavailable" ? "Non disponibile" : "Nessun dato per stasera";
       return html`
         <li class="block static off" data-entity=${state.entity_id}>
-          <div class="row">
+          <div class="row-static">
             <span class="icon">${TV_ICON}</span>
             <span class="info">
               <span class="channel">${this._name(state)}</span>
@@ -96,7 +96,7 @@ class OnAirCard extends LitElement {
       <li class="block ${open ? "open" : ""}" data-entity=${state.entity_id}>
         <button
           type="button"
-          class="row row-button"
+          class="row-button"
           aria-expanded=${open ? "true" : "false"}
           aria-controls=${panelId}
           @click=${() => this._toggle(state.entity_id)}
@@ -195,6 +195,271 @@ class OnAirCard extends LitElement {
             : this._renderTonight(channels)
           : html`<p class="empty">Nessun canale di On Air. Aggiungi l'integrazione o scegli le entità.</p>`}
       </ha-card>
+    `;
+  }
+
+  static get styles() {
+    return css`
+      /* Public tokens: --oa-*. By default they follow the Home Assistant theme and can be
+         overridden from a theme or card-mod. The --_* values are derived, not public. */
+      :host {
+        --oa-bg: var(--ha-card-background, var(--card-background-color, #ffffff));
+        --oa-text: var(--primary-text-color, #212121);
+        --oa-muted: var(--secondary-text-color, #727272);
+        --oa-divider: var(--divider-color, #e0e0e0);
+        --oa-accent: var(--primary-color, #03a9f4);
+        /* Text-safe variants: theme colours alone can be too light on tinted surfaces. */
+        --_muted: color-mix(in srgb, var(--oa-muted) 80%, var(--oa-text));
+        --_accent: color-mix(in srgb, var(--oa-accent) 50%, var(--oa-text));
+        --_surface: color-mix(in srgb, var(--oa-text) 5%, var(--oa-bg));
+        --_tint: color-mix(in srgb, var(--oa-accent) 16%, transparent);
+        --_neutral: color-mix(in srgb, var(--oa-text) 8%, transparent);
+        --_shadow: color-mix(in srgb, var(--oa-text) 22%, transparent);
+        display: block;
+      }
+      ha-card {
+        color: var(--oa-text);
+        overflow: hidden;
+      }
+      button {
+        font: inherit;
+        color: inherit;
+      }
+      button:focus-visible {
+        outline: 2px solid var(--_accent);
+        outline-offset: 2px;
+      }
+      .header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 4px 12px;
+        padding: 16px 16px 12px;
+      }
+      .title {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 1.2;
+      }
+      .updated,
+      .muted,
+      .channel,
+      .next,
+      .summary,
+      .window,
+      .empty,
+      .p-time,
+      .p-cat,
+      .chevron {
+        color: var(--_muted);
+      }
+      .updated {
+        font-size: 13px;
+      }
+      .switch {
+        display: flex;
+        gap: 4px;
+        margin: 0 16px 12px;
+        padding: 4px;
+        border-radius: 26px;
+        background: var(--_surface);
+      }
+      .switch button {
+        flex: 1;
+        min-height: 44px;
+        border: 0;
+        border-radius: 22px;
+        background: transparent;
+        color: var(--_muted);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .switch button[aria-pressed="true"] {
+        background: var(--oa-bg);
+        color: var(--oa-text);
+        box-shadow: 0 1px 2px var(--_shadow);
+      }
+      .list,
+      .programmes {
+        list-style: none;
+        margin: 0;
+      }
+      .list {
+        padding: 0 8px 8px;
+      }
+      .list > li {
+        border-top: 1px solid var(--oa-divider);
+      }
+      .row,
+      .row-static {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        min-height: 72px;
+        box-sizing: border-box;
+        padding: 12px 8px;
+      }
+      .row-static {
+        align-items: center;
+        min-height: 64px;
+      }
+      .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        flex: none;
+        border-radius: 10px;
+        background: var(--_tint);
+        color: var(--_accent);
+      }
+      .off .icon {
+        background: var(--_neutral);
+        color: var(--_muted);
+      }
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        flex: 1;
+        min-width: 0;
+      }
+      .channel {
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .tonight-list .channel {
+        font-size: 15px;
+        letter-spacing: 0;
+        text-transform: none;
+        color: var(--oa-text);
+      }
+      .tonight-list .off .channel {
+        color: var(--_muted);
+      }
+      .headline {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 4px 8px;
+      }
+      .prog-title {
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .prog-title.muted {
+        font-weight: 400;
+      }
+      .prog-title,
+      .next,
+      .summary,
+      .p-title {
+        overflow-wrap: anywhere;
+      }
+      .time,
+      .next,
+      .summary {
+        font-size: 13px;
+      }
+      .pill {
+        flex: none;
+        padding: 2px 8px;
+        border-radius: 99px;
+        background: var(--_neutral);
+        color: var(--_muted);
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .live-pill {
+        background: var(--_tint);
+        color: var(--_accent);
+      }
+      .window {
+        margin: 0;
+        padding: 0 16px 10px;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+      }
+      .block {
+        padding: 4px 0;
+      }
+      .block.open .row-button,
+      .block.open .programmes {
+        background: var(--_surface);
+      }
+      .row-button {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        min-height: 64px;
+        box-sizing: border-box;
+        padding: 10px 8px;
+        border: 0;
+        border-radius: 10px;
+        background: transparent;
+        text-align: left;
+        cursor: pointer;
+      }
+      .block.open .row-button {
+        border-radius: 10px 10px 0 0;
+      }
+      .chevron {
+        flex: none;
+        transition: transform 0.2s ease;
+      }
+      .block.open .chevron {
+        transform: rotate(180deg);
+      }
+      .programmes {
+        padding: 0 8px 10px;
+        border-radius: 0 0 10px 10px;
+      }
+      .programmes[hidden] {
+        display: none;
+      }
+      .programme {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 4px 12px;
+        padding: 6px 0 6px 52px;
+        font-size: 14px;
+      }
+      .p-time {
+        width: 44px;
+        flex: none;
+        font-variant-numeric: tabular-nums;
+      }
+      .p-title {
+        flex: 1;
+        min-width: 0;
+      }
+      .live .p-time {
+        color: var(--_accent);
+      }
+      .live .p-title {
+        font-weight: 500;
+      }
+      .p-cat {
+        flex: none;
+        font-size: 12px;
+      }
+      .empty {
+        margin: 0;
+        padding: 0 16px 16px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .chevron {
+          transition: none;
+        }
+      }
     `;
   }
 }
