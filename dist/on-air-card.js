@@ -66,7 +66,7 @@ class OnAirCard extends LitElement {
   }
 
   _renderTonight(channels) {
-    const span = channels.find((s) => s.attributes.tonight_window)?.attributes.tonight_window;
+    const span = channels.find((s) => s.attributes?.tonight_window)?.attributes.tonight_window;
     return html`
       ${span ? html`<p class="window">STASERA · ${hhmm(span.start)}–${hhmm(span.end)}</p>` : ""}
       <ul class="list tonight-list">${channels.map((s, i) => this._tonightRow(s, i))}</ul>
@@ -74,6 +74,21 @@ class OnAirCard extends LitElement {
   }
 
   _tonightRow(state, index) {
+    const kind = this._kind(state);
+    if (kind !== "ok") {
+      const missing = kind === "unavailable" ? "Non disponibile" : "Nessun dato per stasera";
+      return html`
+        <li class="block static off" data-entity=${state.entity_id}>
+          <div class="row">
+            <span class="icon">${TV_ICON}</span>
+            <span class="info">
+              <span class="channel">${this._name(state)}</span>
+              <span class="summary muted">${missing}</span>
+            </span>
+          </div>
+        </li>
+      `;
+    }
     const { channel_name: name, now, tonight } = state.attributes;
     const open = this._open === state.entity_id;
     const panelId = `oa-tonight-${index}`;
@@ -119,6 +134,19 @@ class OnAirCard extends LitElement {
     this._view = view;
   }
 
+  // "unavailable": no contract attributes (e.g. the integration has no data at all);
+  // "empty": contract present but nothing now, next or tonight; otherwise "ok".
+  _kind(state) {
+    const a = state.attributes ?? {};
+    if (a.channel_name === undefined) return "unavailable";
+    if (!a.now && !a.next && !(a.tonight?.length > 0)) return "empty";
+    return "ok";
+  }
+
+  _name(state) {
+    return state.attributes?.channel_name ?? state.attributes?.friendly_name ?? state.entity_id;
+  }
+
   _pill(category) {
     return this._config.show_category && category ? html`<span class="pill">${category}</span>` : "";
   }
@@ -128,13 +156,17 @@ class OnAirCard extends LitElement {
   }
 
   _nowRow(state) {
-    const { channel_name: name, now, next } = state.attributes;
+    const kind = this._kind(state);
+    const { now, next } = kind === "ok" ? state.attributes : {};
+    const missing = { unavailable: "Non disponibile", empty: "Nessun dato per quest'ora" }[kind];
     return html`
-      <li class="row" data-entity=${state.entity_id}>
+      <li class="row ${kind === "ok" ? "" : "off"}" data-entity=${state.entity_id}>
         <span class="icon">${TV_ICON}</span>
         <div class="info">
-          <span class="channel">${name}</span>
-          ${now
+          <span class="channel">${this._name(state)}</span>
+          ${missing
+            ? html`<span class="headline"><span class="prog-title muted">${missing}</span></span>`
+            : now
             ? html`<span class="headline"><span class="prog-title">${now.title}</span>${this._pill(now.category)}</span>
                 <span class="time">${hhmm(now.start)}–${hhmm(now.end)}</span>`
             : html`<span class="headline"><span class="prog-title muted">Nessun programma in onda</span></span>`}
