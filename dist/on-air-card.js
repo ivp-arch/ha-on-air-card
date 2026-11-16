@@ -14,6 +14,9 @@ const DEFAULT_TITLE = "Guida TV";
 // "2026-11-15T21:15:00+01:00" -> "21:15". Contract times are already in HA's time zone.
 const hhmm = (iso) => (typeof iso === "string" ? iso.slice(11, 16) : "");
 
+// Generic TV glyph (no channel logos), same drawing as the approved mockup.
+const TV_ICON = html`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="12" rx="2"></rect><polyline points="8 3 12 7 16 3"></polyline></svg>`;
+
 class OnAirCard extends LitElement {
   static get properties() {
     return { hass: {}, _config: {}, _view: {} };
@@ -61,6 +64,31 @@ class OnAirCard extends LitElement {
     this._view = view;
   }
 
+  _pill(category) {
+    return this._config.show_category && category ? html`<span class="pill">${category}</span>` : "";
+  }
+
+  _renderNow(channels) {
+    return html`<ul class="list now-list">${channels.map((s) => this._nowRow(s))}</ul>`;
+  }
+
+  _nowRow(state) {
+    const { channel_name: name, now, next } = state.attributes;
+    return html`
+      <li class="row" data-entity=${state.entity_id}>
+        <span class="icon">${TV_ICON}</span>
+        <div class="info">
+          <span class="channel">${name}</span>
+          ${now
+            ? html`<span class="headline"><span class="prog-title">${now.title}</span>${this._pill(now.category)}</span>
+                <span class="time">${hhmm(now.start)}–${hhmm(now.end)}</span>`
+            : html`<span class="headline"><span class="prog-title muted">Nessun programma in onda</span></span>`}
+          ${next ? html`<span class="next">Poi ${hhmm(next.start)} · ${next.title}</span>` : ""}
+        </div>
+      </li>
+    `;
+  }
+
   render() {
     const channels = this._channels();
     const updated = channels.find((s) => s.attributes?.updated_at)?.attributes.updated_at;
@@ -75,7 +103,9 @@ class OnAirCard extends LitElement {
           <button type="button" aria-pressed=${this._view === "tonight" ? "true" : "false"} @click=${() => this._setView("tonight")}>Stasera</button>
         </div>
         ${channels.length
-          ? html`<div class="body"></div>`
+          ? this._view === "now"
+            ? this._renderNow(channels)
+            : html`<div class="body"></div>`
           : html`<p class="empty">Nessun canale di On Air. Aggiungi l'integrazione o scegli le entità.</p>`}
       </ha-card>
     `;
