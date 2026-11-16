@@ -4,7 +4,7 @@ Lovelace card for the [On Air](https://github.com/ivp-arch/ha-on-air) integratio
 
 | Now (light theme) | Tonight (dark theme) |
 |---|---|
-| ![Now view, light theme](docs/screenshot-now-light.png) | ![Tonight view, dark theme, one channel open](docs/screenshot-tonight-dark.png) |
+| ![Now view, light theme](https://raw.githubusercontent.com/ivp-arch/ha-on-air-card/main/docs/screenshot-now-light.png) | ![Tonight view, dark theme, one channel open](https://raw.githubusercontent.com/ivp-arch/ha-on-air-card/main/docs/screenshot-tonight-dark.png) |
 
 - **Adesso (now):** for each channel the programme on air, its category and time, and what comes next.
 - **Stasera (tonight):** the evening window (default 20:00–00:00); open a channel to see its whole evening, with the programme on air marked.
@@ -17,9 +17,19 @@ The [On Air](https://github.com/ivp-arch/ha-on-air) integration, version 0.1.0 o
 
 ## Installation
 
+### Home Assistant Marketplace (2026.11 or later)
+1. Settings → Marketplace → menu (⋮) → **Add from link** (requires connecting a GitHub account)
+2. Enter `ivp-arch/ha-on-air-card`; if asked, choose the **Dashboard** type
+3. Install and reload the browser. The resource is added automatically (`/local/community/...`), unless you manage resources in YAML
+
+### HACS (Home Assistant 2026.10)
+HACS → Frontend → menu (⋮) → Custom repositories → add this repo's URL, category **Lovelace**. Install and reload the page.
+
+### Manual
 1. Copy `dist/on-air-card.js` into the `www` folder of your Home Assistant configuration (create it if missing, then restart Home Assistant).
-2. Settings → Dashboards → ⋮ → Resources → Add resource: URL `/local/on-air-card.js?v=0.1.1`, type *JavaScript module*. The Resources menu needs Advanced mode in your user profile. Change `?v=` at every update so browsers load the new file.
-3. Edit a dashboard → Add card → **On Air Card**.
+2. Settings → Dashboards → ⋮ → Resources → Add resource: URL `/local/on-air-card.js?v=0.1.2`, type *JavaScript module*. The Resources menu needs Advanced mode in your user profile. Change `?v=` at every update so browsers load the new file.
+
+Then edit a dashboard → Add card → **On Air Card**.
 
 ## Options
 

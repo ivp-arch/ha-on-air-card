@@ -8,7 +8,7 @@ const LitElement = Object.getPrototypeOf(customElements.get("ha-panel-lovelace")
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 
-const CARD_VERSION = "0.1.1";
+const CARD_VERSION = "0.1.2";
 const VIEWS = ["now", "tonight"];
 const DEFAULT_TITLE = "Guida TV";
 

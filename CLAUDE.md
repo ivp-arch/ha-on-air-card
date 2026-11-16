@@ -33,7 +33,7 @@ the rest is specific to this project.
 
 ## Project
 
-Lovelace card `custom:on-air-card` for the On Air integration (separate repo `ivp-arch/ha-on-air`): what is on TV now and tonight, one row per channel. Personal use, private repo; Marketplace-compatible structure (`hacs.json`, file in `dist/`).
+Lovelace card `custom:on-air-card` for the On Air integration (separate repo `ivp-arch/ha-on-air`): what is on TV now and tonight, one row per channel. Public repo, installed from the Home Assistant Marketplace (`hacs.json`, file in `dist/`); CI runs HACS validation, tests and a release check (`CARD_VERSION` = tag).
 
 ### Architecture
 
