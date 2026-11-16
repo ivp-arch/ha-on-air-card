@@ -53,7 +53,7 @@ Real buttons for every control, `aria-pressed` on the view switch, `aria-expande
 ## Development
 
 ```bash
-npm install
+npm ci
 npx playwright install chromium   # once
 npm test
 ```

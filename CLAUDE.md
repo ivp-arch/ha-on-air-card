@@ -52,7 +52,7 @@ Lovelace card `custom:on-air-card` for the On Air integration (separate repo `iv
 
 ### Tests
 
-- `npm install`, `npx playwright install chromium` (once), then `npm test` (Node 20+). `tests/harness.mjs` loads the card in Chromium with a minimal Home Assistant stand-in (Lit exposed through `ha-panel-lovelace`, default HA theme variables).
+- `npm ci`, `npx playwright install chromium` (once), then `npm test` (Node 20+). Versions are pinned by `package-lock.json`. `tests/harness.mjs` loads the card in Chromium with a minimal Home Assistant stand-in (Lit exposed through `ha-panel-lovelace`, default HA theme variables).
 - `tests/fixtures/evening.json` was generated with the integration's own `contract.channel_attributes` on the mockup data (evening of 2026-11-15, now = 21:40). Regenerate it the same way if the contract changes; don't hand-edit it.
 - The harness approximates HA; check on a real Home Assistant before a release.
 
