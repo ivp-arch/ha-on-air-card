@@ -1,0 +1,828 @@
+{
+  "_source": "Generated with ha-on-air contract.channel_attributes (contract_version 1) on mockup data; evening of 2026-11-15, now = 21:40 Europe/Rome.",
+  "sensor.on_air_rai_1": {
+    "entity_id": "sensor.on_air_rai_1",
+    "state": "Belgio - Italia",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Rai 1",
+      "now": {
+        "title": "Belgio - Italia",
+        "start": "2026-11-15T20:30:00+01:00",
+        "end": "2026-11-15T23:20:00+01:00",
+        "category": "Sport",
+        "source": "open_epg"
+      },
+      "next": {
+        "title": "Tg1",
+        "start": "2026-11-15T23:20:00+01:00",
+        "end": "2026-11-15T23:25:00+01:00",
+        "category": "Notizie",
+        "source": "open_epg"
+      },
+      "tonight": [
+        {
+          "title": "Tg1",
+          "start": "2026-11-15T20:00:00+01:00",
+          "end": "2026-11-15T20:30:00+01:00",
+          "category": "Notizie",
+          "source": "open_epg"
+        },
+        {
+          "title": "Belgio - Italia",
+          "start": "2026-11-15T20:30:00+01:00",
+          "end": "2026-11-15T23:20:00+01:00",
+          "category": "Sport",
+          "source": "open_epg"
+        },
+        {
+          "title": "Tg1",
+          "start": "2026-11-15T23:20:00+01:00",
+          "end": "2026-11-15T23:25:00+01:00",
+          "category": "Notizie",
+          "source": "open_epg"
+        }
+      ],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Rai 1",
+      "icon": "mdi:television"
+    }
+  },
+  "sensor.on_air_rai_2": {
+    "entity_id": "sensor.on_air_rai_2",
+    "state": "The Rookie",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Rai 2",
+      "now": {
+        "title": "The Rookie",
+        "start": "2026-11-15T21:00:00+01:00",
+        "end": "2026-11-15T21:50:00+01:00",
+        "category": "Serie TV",
+        "source": "open_epg"
+      },
+      "next": {
+        "title": "The Rookie",
+        "start": "2026-11-15T21:50:00+01:00",
+        "end": "2026-11-15T22:35:00+01:00",
+        "category": "Serie TV",
+        "source": "open_epg"
+      },
+      "tonight": [
+        {
+          "title": "Pallavolo: Serie A Maschile",
+          "start": "2026-11-15T17:50:00+01:00",
+          "end": "2026-11-15T20:30:00+01:00",
+          "category": "Sport",
+          "source": "open_epg"
+        },
+        {
+          "title": "Tg2",
+          "start": "2026-11-15T20:30:00+01:00",
+          "end": "2026-11-15T21:00:00+01:00",
+          "category": "Notizie",
+          "source": "open_epg"
+        },
+        {
+          "title": "The Rookie",
+          "start": "2026-11-15T21:00:00+01:00",
+          "end": "2026-11-15T21:50:00+01:00",
+          "category": "Serie TV",
+          "source": "open_epg"
+        },
+        {
+          "title": "The Rookie",
+          "start": "2026-11-15T21:50:00+01:00",
+          "end": "2026-11-15T22:35:00+01:00",
+          "category": "Serie TV",
+          "source": "open_epg"
+        },
+        {
+          "title": "The Rookie",
+          "start": "2026-11-15T22:35:00+01:00",
+          "end": "2026-11-15T23:20:00+01:00",
+          "category": "Serie TV",
+          "source": "open_epg"
+        },
+        {
+          "title": "La Domenica Sportiva",
+          "start": "2026-11-15T23:20:00+01:00",
+          "end": "2026-11-16T00:00:00+01:00",
+          "category": "Sport",
+          "source": "open_epg"
+        }
+      ],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Rai 2",
+      "icon": "mdi:television"
+    }
+  },
+  "sensor.on_air_rai_3": {
+    "entity_id": "sensor.on_air_rai_3",
+    "state": "Report",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Rai 3",
+      "now": {
+        "title": "Report",
+        "start": "2026-11-15T21:00:00+01:00",
+        "end": "2026-11-15T23:15:00+01:00",
+        "category": "Attualità",
+        "source": "open_epg"
+      },
+      "next": {
+        "title": "Allegro ma non troppo",
+        "start": "2026-11-15T23:15:00+01:00",
+        "end": "2026-11-16T00:05:00+01:00",
+        "category": "Attualità",
+        "source": "open_epg"
+      },
+      "tonight": [
+        {
+          "title": "Blob",
+          "start": "2026-11-15T20:00:00+01:00",
+          "end": "2026-11-15T20:30:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        },
+        {
+          "title": "Report",
+          "start": "2026-11-15T20:30:00+01:00",
+          "end": "2026-11-15T21:00:00+01:00",
+          "category": "Attualità",
+          "source": "open_epg"
+        },
+        {
+          "title": "Report",
+          "start": "2026-11-15T21:00:00+01:00",
+          "end": "2026-11-15T23:15:00+01:00",
+          "category": "Attualità",
+          "source": "open_epg"
+        },
+        {
+          "title": "Allegro ma non troppo",
+          "start": "2026-11-15T23:15:00+01:00",
+          "end": "2026-11-16T00:05:00+01:00",
+          "category": "Attualità",
+          "source": "open_epg"
+        }
+      ],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Rai 3",
+      "icon": "mdi:television"
+    }
+  },
+  "sensor.on_air_rete_4": {
+    "entity_id": "sensor.on_air_rete_4",
+    "state": "Fuori dal coro",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Rete 4",
+      "now": {
+        "title": "Fuori dal coro",
+        "start": "2026-11-15T21:33:00+01:00",
+        "end": "2026-11-16T00:57:00+01:00",
+        "category": "Informazione",
+        "source": "open_epg"
+      },
+      "next": null,
+      "tonight": [
+        {
+          "title": "La promessa - PrimaTv",
+          "start": "2026-11-15T19:42:00+01:00",
+          "end": "2026-11-15T20:30:00+01:00",
+          "category": "Fiction",
+          "source": "open_epg"
+        },
+        {
+          "title": "Realpolitik",
+          "start": "2026-11-15T20:30:00+01:00",
+          "end": "2026-11-15T21:33:00+01:00",
+          "category": "Informazione",
+          "source": "open_epg"
+        },
+        {
+          "title": "Fuori dal coro",
+          "start": "2026-11-15T21:33:00+01:00",
+          "end": "2026-11-16T00:57:00+01:00",
+          "category": "Informazione",
+          "source": "open_epg"
+        }
+      ],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Rete 4",
+      "icon": "mdi:television"
+    }
+  },
+  "sensor.on_air_canale_5": {
+    "entity_id": "sensor.on_air_canale_5",
+    "state": "Racconto di una notte",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Canale 5",
+      "now": {
+        "title": "Racconto di una notte",
+        "start": "2026-11-15T21:21:00+01:00",
+        "end": "2026-11-15T22:10:00+01:00",
+        "category": "Fiction",
+        "source": "open_epg"
+      },
+      "next": {
+        "title": "Racconto di una notte",
+        "start": "2026-11-15T22:10:00+01:00",
+        "end": "2026-11-15T23:09:00+01:00",
+        "category": "Fiction",
+        "source": "open_epg"
+      },
+      "tonight": [
+        {
+          "title": "Tg5",
+          "start": "2026-11-15T20:00:00+01:00",
+          "end": "2026-11-15T20:39:00+01:00",
+          "category": "TG",
+          "source": "open_epg"
+        },
+        {
+          "title": "La ruota della fortuna",
+          "start": "2026-11-15T20:39:00+01:00",
+          "end": "2026-11-15T21:20:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        },
+        {
+          "title": "Racconto di una notte",
+          "start": "2026-11-15T21:21:00+01:00",
+          "end": "2026-11-15T22:10:00+01:00",
+          "category": "Fiction",
+          "source": "open_epg"
+        },
+        {
+          "title": "Racconto di una notte",
+          "start": "2026-11-15T22:10:00+01:00",
+          "end": "2026-11-15T23:09:00+01:00",
+          "category": "Fiction",
+          "source": "open_epg"
+        },
+        {
+          "title": "Racconto di una notte",
+          "start": "2026-11-15T23:09:00+01:00",
+          "end": "2026-11-16T00:02:00+01:00",
+          "category": "Fiction",
+          "source": "open_epg"
+        }
+      ],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Canale 5",
+      "icon": "mdi:television"
+    }
+  },
+  "sensor.on_air_italia_1": {
+    "entity_id": "sensor.on_air_italia_1",
+    "state": "Le Iene presentano: Inside",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Italia 1",
+      "now": {
+        "title": "Le Iene presentano: Inside",
+        "start": "2026-11-15T21:13:00+01:00",
+        "end": "2026-11-16T01:26:00+01:00",
+        "category": "Intrattenimento",
+        "source": "open_epg"
+      },
+      "next": null,
+      "tonight": [
+        {
+          "title": "C.S.I. - Scena del crimine",
+          "start": "2026-11-15T19:22:00+01:00",
+          "end": "2026-11-15T20:25:00+01:00",
+          "category": null,
+          "source": "open_epg"
+        },
+        {
+          "title": "NCIS - Unita' Anticrimine",
+          "start": "2026-11-15T20:25:00+01:00",
+          "end": "2026-11-15T21:13:00+01:00",
+          "category": "Serie TV",
+          "source": "open_epg"
+        },
+        {
+          "title": "Le Iene presentano: Inside",
+          "start": "2026-11-15T21:13:00+01:00",
+          "end": "2026-11-16T01:26:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        }
+      ],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Italia 1",
+      "icon": "mdi:television"
+    }
+  },
+  "sensor.on_air_sky_uno": {
+    "entity_id": "sensor.on_air_sky_uno",
+    "state": "GialappaShow",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Sky Uno",
+      "now": {
+        "title": "GialappaShow",
+        "start": "2026-11-15T21:35:00+01:00",
+        "end": "2026-11-15T23:55:00+01:00",
+        "category": "Intrattenimento",
+        "source": "open_epg"
+      },
+      "next": null,
+      "tonight": [
+        {
+          "title": "X Factor",
+          "start": "2026-11-15T18:25:00+01:00",
+          "end": "2026-11-15T21:35:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        },
+        {
+          "title": "GialappaShow",
+          "start": "2026-11-15T21:35:00+01:00",
+          "end": "2026-11-15T23:55:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        }
+      ],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Sky Uno",
+      "icon": "mdi:television"
+    }
+  },
+  "sensor.on_air_sky_atlantic": {
+    "entity_id": "sensor.on_air_sky_atlantic",
+    "state": "Babylon Berlin",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Sky Atlantic",
+      "now": {
+        "title": "Babylon Berlin",
+        "start": "2026-11-15T21:15:00+01:00",
+        "end": "2026-11-15T22:00:00+01:00",
+        "category": "Intrattenimento",
+        "source": "open_epg"
+      },
+      "next": {
+        "title": "Babylon Berlin",
+        "start": "2026-11-15T22:00:00+01:00",
+        "end": "2026-11-15T22:55:00+01:00",
+        "category": "Intrattenimento",
+        "source": "open_epg"
+      },
+      "tonight": [
+        {
+          "title": "L'istituto",
+          "start": "2026-11-15T19:15:00+01:00",
+          "end": "2026-11-15T20:20:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        },
+        {
+          "title": "L'istituto",
+          "start": "2026-11-15T20:20:00+01:00",
+          "end": "2026-11-15T21:15:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        },
+        {
+          "title": "Babylon Berlin",
+          "start": "2026-11-15T21:15:00+01:00",
+          "end": "2026-11-15T22:00:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        },
+        {
+          "title": "Babylon Berlin",
+          "start": "2026-11-15T22:00:00+01:00",
+          "end": "2026-11-15T22:55:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        },
+        {
+          "title": "Rosa Elettrica - In fuga con il nemico",
+          "start": "2026-11-15T22:55:00+01:00",
+          "end": "2026-11-15T23:55:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        }
+      ],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Sky Atlantic",
+      "icon": "mdi:television"
+    }
+  },
+  "sensor.on_air_sky_serie": {
+    "entity_id": "sensor.on_air_sky_serie",
+    "state": "Nord Sud Ovest Est: La leggendaria..",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Sky Serie",
+      "now": {
+        "title": "Nord Sud Ovest Est: La leggendaria..",
+        "start": "2026-11-15T21:15:00+01:00",
+        "end": "2026-11-15T22:20:00+01:00",
+        "category": "Intrattenimento",
+        "source": "open_epg"
+      },
+      "next": {
+        "title": "Nord Sud Ovest Est: La leggendaria..",
+        "start": "2026-11-15T22:20:00+01:00",
+        "end": "2026-11-15T23:20:00+01:00",
+        "category": "Intrattenimento",
+        "source": "open_epg"
+      },
+      "tonight": [
+        {
+          "title": "The Gilded Age",
+          "start": "2026-11-15T19:15:00+01:00",
+          "end": "2026-11-15T20:15:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        },
+        {
+          "title": "The Gilded Age",
+          "start": "2026-11-15T20:15:00+01:00",
+          "end": "2026-11-15T21:15:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        },
+        {
+          "title": "Nord Sud Ovest Est: La leggendaria..",
+          "start": "2026-11-15T21:15:00+01:00",
+          "end": "2026-11-15T22:20:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        },
+        {
+          "title": "Nord Sud Ovest Est: La leggendaria..",
+          "start": "2026-11-15T22:20:00+01:00",
+          "end": "2026-11-15T23:20:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        },
+        {
+          "title": "Nord Sud Ovest Est: La leggendaria..",
+          "start": "2026-11-15T23:20:00+01:00",
+          "end": "2026-11-16T00:15:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        }
+      ],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Sky Serie",
+      "icon": "mdi:television"
+    }
+  },
+  "sensor.on_air_sky_cinema_uno": {
+    "entity_id": "sensor.on_air_sky_cinema_uno",
+    "state": "I tre moschettieri - Milady",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Sky Cinema Uno",
+      "now": {
+        "title": "I tre moschettieri - Milady",
+        "start": "2026-11-15T21:15:00+01:00",
+        "end": "2026-11-15T23:15:00+01:00",
+        "category": "Film",
+        "source": "open_epg"
+      },
+      "next": {
+        "title": "Nord Sud Ovest Est: La leggendaria..",
+        "start": "2026-11-15T23:15:00+01:00",
+        "end": "2026-11-16T00:20:00+01:00",
+        "category": "Intrattenimento",
+        "source": "open_epg"
+      },
+      "tonight": [
+        {
+          "title": "I tre moschettieri - D'Artagnan",
+          "start": "2026-11-15T19:10:00+01:00",
+          "end": "2026-11-15T21:15:00+01:00",
+          "category": "Film",
+          "source": "open_epg"
+        },
+        {
+          "title": "I tre moschettieri - Milady",
+          "start": "2026-11-15T21:15:00+01:00",
+          "end": "2026-11-15T23:15:00+01:00",
+          "category": "Film",
+          "source": "open_epg"
+        },
+        {
+          "title": "Nord Sud Ovest Est: La leggendaria..",
+          "start": "2026-11-15T23:15:00+01:00",
+          "end": "2026-11-16T00:20:00+01:00",
+          "category": "Intrattenimento",
+          "source": "open_epg"
+        }
+      ],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Sky Cinema Uno",
+      "icon": "mdi:television"
+    }
+  },
+  "sensor.on_air_sky_sport_uno": {
+    "entity_id": "sensor.on_air_sky_sport_uno",
+    "state": "Singolare: Sessione Serale",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Sky Sport Uno",
+      "now": {
+        "title": "Singolare: Sessione Serale",
+        "start": "2026-11-15T20:30:00+01:00",
+        "end": "2026-11-15T22:30:00+01:00",
+        "category": null,
+        "source": "open_epg"
+      },
+      "next": {
+        "title": "15/11/2026",
+        "start": "2026-11-15T22:30:00+01:00",
+        "end": "2026-11-15T23:00:00+01:00",
+        "category": null,
+        "source": "open_epg"
+      },
+      "tonight": [
+        {
+          "title": "Udine - EA7 Emporio Armani Milano",
+          "start": "2026-11-15T18:05:00+01:00",
+          "end": "2026-11-15T20:15:00+01:00",
+          "category": null,
+          "source": "open_epg"
+        },
+        {
+          "title": "Postpartita",
+          "start": "2026-11-15T20:15:00+01:00",
+          "end": "2026-11-15T20:30:00+01:00",
+          "category": null,
+          "source": "open_epg"
+        },
+        {
+          "title": "Singolare: Sessione Serale",
+          "start": "2026-11-15T20:30:00+01:00",
+          "end": "2026-11-15T22:30:00+01:00",
+          "category": null,
+          "source": "open_epg"
+        },
+        {
+          "title": "15/11/2026",
+          "start": "2026-11-15T22:30:00+01:00",
+          "end": "2026-11-15T23:00:00+01:00",
+          "category": null,
+          "source": "open_epg"
+        },
+        {
+          "title": "Ep.7",
+          "start": "2026-11-15T23:00:00+01:00",
+          "end": "2026-11-15T23:20:00+01:00",
+          "category": null,
+          "source": "open_epg"
+        },
+        {
+          "title": "Torino Tennis Talk",
+          "start": "2026-11-15T23:20:00+01:00",
+          "end": "2026-11-16T00:15:00+01:00",
+          "category": null,
+          "source": "open_epg"
+        }
+      ],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Sky Sport Uno",
+      "icon": "mdi:television"
+    }
+  },
+  "sensor.on_air_gap": {
+    "entity_id": "sensor.on_air_gap",
+    "state": "unknown",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Canale Prova",
+      "now": null,
+      "next": {
+        "title": "Film della sera",
+        "start": "2026-11-15T21:50:00+01:00",
+        "end": "2026-11-15T23:30:00+01:00",
+        "category": "Film",
+        "source": "open_epg"
+      },
+      "tonight": [
+        {
+          "title": "Tg",
+          "start": "2026-11-15T20:30:00+01:00",
+          "end": "2026-11-15T21:30:00+01:00",
+          "category": null,
+          "source": "open_epg"
+        },
+        {
+          "title": "Film della sera",
+          "start": "2026-11-15T21:50:00+01:00",
+          "end": "2026-11-15T23:30:00+01:00",
+          "category": "Film",
+          "source": "open_epg"
+        }
+      ],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Canale Prova",
+      "icon": "mdi:television"
+    }
+  },
+  "sensor.on_air_ghost": {
+    "entity_id": "sensor.on_air_ghost",
+    "state": "unknown",
+    "attributes": {
+      "contract_version": 1,
+      "channel_name": "Ghost TV",
+      "now": null,
+      "next": null,
+      "tonight": [],
+      "tonight_window": {
+        "start": "2026-11-15T20:00:00+01:00",
+        "end": "2026-11-16T00:00:00+01:00"
+      },
+      "updated_at": "2026-11-15T12:05:00+01:00",
+      "sources": {
+        "open_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        },
+        "iptv_epg": {
+          "status": "ok",
+          "updated_at": "2026-11-15T12:05:00+01:00"
+        }
+      },
+      "friendly_name": "On Air Ghost TV",
+      "icon": "mdi:television"
+    }
+  }
+}

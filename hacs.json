@@ -1,0 +1,6 @@
+{
+  "name": "On Air Card",
+  "render_readme": true,
+  "filename": "on-air-card.js",
+  "homeassistant": "2026.10.0"
+}

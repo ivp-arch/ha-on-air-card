@@ -1,0 +1,13 @@
+{
+  "name": "ha-on-air-card",
+  "private": true,
+  "type": "module",
+  "description": "Test tooling for the On Air Lovelace card. The card itself has no build step.",
+  "scripts": {
+    "test": "node --test \"tests/*.test.mjs\""
+  },
+  "devDependencies": {
+    "lit": "3.3.3",
+    "playwright": "1.63.0"
+  }
+}
