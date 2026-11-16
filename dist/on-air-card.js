@@ -29,9 +29,10 @@ class OnAirCard extends LitElement {
       throw new Error("entities deve essere un elenco di entità.");
     }
     this._config = {
-      title: DEFAULT_TITLE,
       show_category: true,
       ...config,
+      // The visual editor writes "" when the field is cleared: that means "default".
+      title: config?.title || DEFAULT_TITLE,
       view: VIEWS.includes(config?.view) ? config.view : "now",
     };
     this._view = this._config.view;
@@ -43,6 +44,62 @@ class OnAirCard extends LitElement {
 
   static getStubConfig() {
     return {};
+  }
+
+  // Visual editor: Home Assistant renders this schema with its own controls
+  // (static getConfigForm). Labels are Italian like the rest of the card.
+  static getConfigForm() {
+    const labels = {
+      title: "Titolo",
+      entities: "Canali (opzionale)",
+      view: "Vista iniziale",
+      show_category: "Mostra la categoria",
+    };
+    const helpers = {
+      title: "Se lo lasci vuoto: «Guida TV».",
+      entities: "Lascia vuoto per mostrare tutti i canali di On Air.",
+      // A select does not display its schema default: say it.
+      view: "Se non scegli nulla si apre su Adesso.",
+    };
+    return {
+      schema: [
+        { name: "title", selector: { text: {} } },
+        { name: "entities", selector: { entity: { multiple: true, filter: { domain: "sensor", integration: "on_air" } } } },
+        {
+          type: "grid",
+          name: "",
+          schema: [
+            {
+              name: "view",
+              selector: {
+                select: {
+                  mode: "dropdown",
+                  options: [
+                    { value: "now", label: "Adesso" },
+                    { value: "tonight", label: "Stasera" },
+                  ],
+                },
+              },
+            },
+            { name: "show_category", default: true, selector: { boolean: {} } },
+          ],
+        },
+      ],
+      computeLabel: (schema) => labels[schema.name],
+      computeHelper: (schema) => helpers[schema.name],
+      // Throwing switches the editor to YAML (config the form cannot represent).
+      assertConfig: (config) => {
+        const { entities, view, show_category: showCategory, title } = config;
+        if (entities !== undefined && !(Array.isArray(entities) && entities.every((e) => typeof e === "string"))) {
+          throw new Error("entities deve essere un elenco di entità.");
+        }
+        if (view !== undefined && !VIEWS.includes(view)) throw new Error("view deve essere now o tonight.");
+        if (showCategory !== undefined && typeof showCategory !== "boolean") {
+          throw new Error("show_category deve essere vero o falso.");
+        }
+        if (title !== undefined && typeof title !== "string") throw new Error("title deve essere un testo.");
+      },
+    };
   }
 
   // Explicit entities in the given order; otherwise (absent or [] from the editor)
